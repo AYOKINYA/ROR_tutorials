@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
 	http_basic_authenticate_with name: "user", password: "password", except: [:index, :show]
-	
+	# an instance variable (prefixed with @)
+	# to hold a reference to the article object.
 	def index
 		@articles = Article.all
 	end
