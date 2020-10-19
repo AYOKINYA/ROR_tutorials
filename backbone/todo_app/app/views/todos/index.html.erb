@@ -55,3 +55,19 @@ document.write('변수 내용 쓰기 테스트: ', n, '<br />');
 
 </script>
 
+<h2>============</h2>
+
+<%= javascript_pack_tag 'todos' %>
+<table id="todo_table">
+  <tr>
+    <th>Title</th>
+    <th>Order</th>
+  </tr>
+</table>
+
+</div>
+
+<script id="todo_template" type="text/html">
+<td>{{title}}</td>
+<td>{{order}}</td>
+</script>
