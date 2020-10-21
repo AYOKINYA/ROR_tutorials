@@ -58,16 +58,19 @@ document.write('변수 내용 쓰기 테스트: ', n, '<br />');
 <h2>============</h2>
 
 <%= javascript_pack_tag 'todos' %>
-<table id="todo_table">
-  <tr>
-    <th>Title</th>
-    <th>Order</th>
-  </tr>
-</table>
+<div id="todos-app">
+  <ul class="todos-list"></ul>
 
+  <div class="todo-create">
+    <b>Add a Todo</b>
+    <label>Title: <input id="todo-title" type="text"></label>
+    <label>Order: <input id="todo-order" type="text"></label>
+    <button class="create">Create Todo!</button>
+  </div>
 </div>
 
-<script id="todo_template" type="text/html">
-<td>{{title}}</td>
-<td>{{order}}</td>
+<script type="text/template" id="todo-item-tmpl">
+  <p>Title: <i><%= @title %></i></p>
+  <p>Order: <i><%= @order %></i></p>
+  <button class="remove">x</button>
 </script>

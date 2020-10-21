@@ -2,109 +2,87 @@ import $ from 'jquery';
 import _ from "underscore"
 import Backbone from 'backbone';
 
-//jQuery when DOM loads run this
-$(function(){
-  
-    //Backbone Model
-  
-    window.Todo = Backbone.Model.extend({
-      url: function() {
-        return this.id ? '/todos/' + this.id : '/todos'; //Ternary, look it up if you aren't sure
-      },
-    
-      defaults: { todo: {
-        title: "None entered",
-        order: 0
-      }},
-    
-      initialize: function(){
-        //Can be used to initialize Model attributes
-      }
-    });
-  
-    //Collection
-  
-    window.TodoCollection = Backbone.Collection.extend({
-      model: Todo,
-      url: '/todos'
-    });
-  
-    window.Todos = new TodoCollection;
-  
-    //View
-  
-    window.TodoView = Backbone.View.extend({
-      tagName: "tr",
-    
-      events: { 
-        //Can be used for handling events on the template 
-      },
-    
-      initialize: function(){
-        this.render();
-      },
-    
-      render: function(){
-        var todo = this.model.toJSON();
-        //Template stuff goes here
-        $(this.el).html(ich.todo_template(todo));
-        return this;
-      }
-    });
-  
-    //Application View
-  
-    window.AppView = Backbone.View.extend({
-    
-      el: $("#todos_app"),
-    
-      events: {
-        "submit form#new_todo": "createTodo"
-      },
-    
-      initialize: function(){
-        _.bindAll(this, 'addOne', 'addAll');
-        
-        Todos.bind('add', this.addOne);
-        Todos.bind('refresh', this.addAll);
-        Todos.bind('all', this.render);
-        
-        Todos.fetch({success: function(mod, response) {
-          console.log("Thats cool: " + JSON.stringify(mod));
-        }}); //This Gets the Model from the Server
-      },
-      
-      addOne: function(todo) {
-        var view = new TodoView({model: todo});
-        this.$("todo_table").append(view.render().el);
-      },
-      
-      addAll: function(){
-        Todos.each(this.addOne);
-      },
-      
-      newAttributes: function(event) {
-        var new_todo_form = $(event.currentTarget).serializeObject();
-        //alert (JSON.stringify(new_dog_form));
-        return { todo: {
-            title: new_todo_form["todo[title]"],
-            order: new_todo_form["todo[order]"]
-          }}
-      },
-      
-      createTodo: function(e) {
-        e.preventDefault(); //This prevents the form from submitting normally
-        
-        var params = this.newAttributes(e);
-        
-        Todos.create(params);
-        
-        //TODO - Clear the form fields after submitting
-      }
-    
-    });
-  
-    //START THE BACKBONE APP
-    window.App = new AppView;
-  
-  });
+
+
+$(function() {
+
+var TodoModel = Backbone.Model.extend({
+  //urlRoot: '/todos'
+});
+
+var TodoCollection = Backbone.Collection.extend({
+  model: TodoModel,
+  url: '/todos',
+
+  parse: function(data) {
+    return data.todos;
+  }
+});
+
+var TodosListItemView = Backbone.View.extend({
+  tagName: 'li',
+  className: 'todo',
+  template: _.template($('#todo-item-tmpl').html()),
+
+  initialize: function() {
+    this.listenTo(this.model, 'destroy', this.remove)
+  },
+
+  render: function() {
+    var html = this.template(this.model.toJSON());
+    this.$el.html(html);
+    return (this);
+  },
+
+  events: {
+    'click .remove': 'onRemove'
+  },
+
+  onRemove: function() {
+    this.model.destroy();
+  }
+});
+
+var TodosListView = Backbone.View.extend({
+  el: '#todos-app',
+
+  initialize: function() {
+    this.listenTo(this.collection, 'sync', this.render);
+  },
+
+  render: function() {
+    var $list = this.$('ul.todos-list').empty();
+
+    this.collection.each(function(model) {
+      var item = new TodosListItemView({model: model});
+      $list.append(item.render().$el);
+    }, this);
+
+    return this;
+  },
+
+  events: {
+    'click .create': 'onCreate'
+  },
+
+  onCreate: function() {
+    var $title = this.$('#todo-title');
+    var $order = this.$('#todo-order');
+
+    if ($title.val()) {
+      this.collection.create({
+        title: $title.val(),
+        order: $order.val()
+      });
+
+      $title.val('');
+      $order.val('');
+    }
+  }
+});
+
+var todosList = new TodoCollection();
+var todosView = new TodosListView({collection: todosList});
+todosList.fetch();
+
+});
