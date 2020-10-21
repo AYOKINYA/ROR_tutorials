@@ -34,32 +34,11 @@
 <button id="greet-user-button">Hey!</button>
 <br/>
 
-<script type="text/javascript">
-
-document.writeln('글 쓰기 테스트입니다.');
-document.write('글 쓰기 테스트입니다.' + '<br />');
-document.write('글 쓰기 테스트입니다.' + '<br />');
-document.write('글 쓰기 테스트입니다.' + '<br />');
-
-document.write('<br /><br /><br />');
-
-
-var s = 'ABCD';
-document.write('변수 내용 쓰기 테스트: ' + s + '<br />');
-
-
-var n = 123.001;
-document.write('변수 내용 쓰기 테스트: ' + n + '<br />');
-
-document.write('변수 내용 쓰기 테스트: ', n, '<br />');
-
-</script>
-
 <h2>============</h2>
-
 <%= javascript_pack_tag 'todos' %>
+
 <div id="todos-app">
-  <ul class="todos-list"></ul>
+<ul class="todos-list"></ul>
 
   <div class="todo-create">
     <b>Add a Todo</b>
@@ -71,6 +50,6 @@ document.write('변수 내용 쓰기 테스트: ', n, '<br />');
 
 <script type="text/template" id="todo-item-tmpl">
   <p>Title: <i><%= @title %></i></p>
-  <p>Order: <i><%= @order %></i></p>
+  <p>Order: <i>{order}</i></p>
   <button class="remove">x</button>
 </script>

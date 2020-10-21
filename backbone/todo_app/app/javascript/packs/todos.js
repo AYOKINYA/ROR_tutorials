@@ -3,25 +3,20 @@ import _ from "underscore"
 import Backbone from 'backbone';
 
 
-
 $(function() {
 
 var TodoModel = Backbone.Model.extend({
-  //urlRoot: '/todos'
+  // urlRoot: '/todos'
 });
 
 var TodoCollection = Backbone.Collection.extend({
   model: TodoModel,
-  url: '/todos',
+  url: '/todos.json'
 
-  parse: function(data) {
-    return data.todos;
-  }
 });
 
 var TodosListItemView = Backbone.View.extend({
   tagName: 'li',
-  className: 'todo',
   template: _.template($('#todo-item-tmpl').html()),
 
   initialize: function() {
@@ -68,6 +63,9 @@ var TodosListView = Backbone.View.extend({
   onCreate: function() {
     var $title = this.$('#todo-title');
     var $order = this.$('#todo-order');
+    
+    console.log($title.val());
+    console.log($order.val());
 
     if ($title.val()) {
       this.collection.create({
@@ -82,6 +80,7 @@ var TodosListView = Backbone.View.extend({
 });
 
 var todosList = new TodoCollection();
+
 var todosView = new TodosListView({collection: todosList});
 todosList.fetch();
 

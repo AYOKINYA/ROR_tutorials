@@ -6,7 +6,7 @@ class TodosController < ApplicationController
   def index
     @todos = Todo.all
     @todo = Todo.new
-    #render json: @todos.to_json
+
     respond_to do |format|
       format.html { render :index }
       format.json { render :json => @todos }
@@ -20,7 +20,7 @@ class TodosController < ApplicationController
 
   # GET /todos/new
   def new
-    @todo = Todo.newA
+    @todo = Todo.new
   end
 
   # GET /todos/1/edit
