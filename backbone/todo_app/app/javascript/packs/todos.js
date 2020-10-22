@@ -2,6 +2,11 @@ import $ from 'jquery';
 import _ from "underscore"
 import Backbone from 'backbone';
 
+_.templateSettings = {
+  interpolate : /\{\{=(.+?)\}\}/g,
+  escape : /\{\{-(.+?)\}\}/g,
+  evaluate: /\{\{(.+?)\}\}/g,
+};
 
 $(function() {
 
@@ -11,13 +16,15 @@ var TodoModel = Backbone.Model.extend({
 
 var TodoCollection = Backbone.Collection.extend({
   model: TodoModel,
-  url: '/todos.json'
+  url: '/todos'
 
 });
 
 var TodosListItemView = Backbone.View.extend({
   tagName: 'li',
+  className: 'todo',
   template: _.template($('#todo-item-tmpl').html()),
+  
 
   initialize: function() {
     this.listenTo(this.model, 'destroy', this.remove)
@@ -26,6 +33,17 @@ var TodosListItemView = Backbone.View.extend({
   render: function() {
     var html = this.template(this.model.toJSON());
     this.$el.html(html);
+    
+    console.log(this.model.get("title"));
+    console.log(this.model.get("order"));
+    console.log("====model===", this.model);
+    console.log("===this.model.toJSON()", this.model.toJSON());
+    console.log(html);
+    /*
+    this.$el.append(this.model.get("title"));
+    this.$el.append(" ");
+    this.$el.append(this.model.get("order"));
+    */
     return (this);
   },
 
@@ -80,7 +98,6 @@ var TodosListView = Backbone.View.extend({
 });
 
 var todosList = new TodoCollection();
-
 var todosView = new TodosListView({collection: todosList});
 todosList.fetch();
 
