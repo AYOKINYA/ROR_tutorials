@@ -11,7 +11,7 @@ _.templateSettings = {
 $(function() {
 
 var TodoModel = Backbone.Model.extend({
-  // urlRoot: '/todos'
+  urlRoot: '/todos'
 });
 
 var TodoCollection = Backbone.Collection.extend({
