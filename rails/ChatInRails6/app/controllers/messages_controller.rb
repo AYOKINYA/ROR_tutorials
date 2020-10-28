@@ -7,7 +7,8 @@ class MessagesController < ApplicationController
       @message = Message.create(msg_params)
       if @message.save
         ActionCable.server.broadcast "room_channel",
-                                        content: @message.content      
+                                        content: @message.content    
+                                        
       else
         
       end
