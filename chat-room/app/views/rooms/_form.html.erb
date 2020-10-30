@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: 'form-control' %>
+  <div class="form-group mb-3">
+    <%= form.label "Create a new room" %>
+    <%= form.text_field :name, class: 'form-control', placeholder: "Room name" %>
   </div>
 
   <div class="actions">
-    <%= form.submit "Add room", class: "btn btn-primary btn-block" %>
+    <%= form.submit "Add room", class: "btn btn-outline-primary btn-block" %>
   </div>
 <% end %>
