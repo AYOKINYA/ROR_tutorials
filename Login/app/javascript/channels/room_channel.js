@@ -4,8 +4,6 @@ document.addEventListener('turbolinks:load', () => {
   const room_element = document.getElementById('room-id');
   const room_id = room_element.getAttribute('data-room-id');
 
-  console.log(consumer.subscriptions)
-
   consumer.subscriptions.subscriptions.forEach((subscription) => {
     consumer.subscriptions.remove(subscription)
   })
@@ -13,11 +11,10 @@ document.addEventListener('turbolinks:load', () => {
   consumer.subscriptions.create({ channel: "RoomChannel", room_id: room_id }, {
     connected() {
       console.log("connected to " + room_id)
-      // Called when the subscription is ready for use on the server
     },
 
     disconnected() {
-      // Called when the subscription has been terminated by the server
+      console.log("Disconnected to " + room_id)
     },
 
     received(data) {
@@ -35,7 +32,7 @@ document.addEventListener('turbolinks:load', () => {
       const messageContainer = document.getElementById('messages')
       messageContainer.innerHTML = messageContainer.innerHTML + html
       
-      document.getElementById("send").disabled = false;
+      document.getElementById('send').disabled = false;
       document.getElementById('message_content').value = '';
     }
   });
