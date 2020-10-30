@@ -34,6 +34,9 @@ document.addEventListener('turbolinks:load', () => {
 
       const messageContainer = document.getElementById('messages')
       messageContainer.innerHTML = messageContainer.innerHTML + html
+      
+      document.getElementById("send").disabled = false;
+      document.getElementById('message_content').value = '';
     }
   });
 })
