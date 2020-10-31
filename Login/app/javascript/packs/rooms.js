@@ -52,7 +52,7 @@ var RoomsListView = Backbone.View.extend({
   el: '#rooms-app',
 
   initialize: function() {
-    this.listenTo(this.collection, 'sync', this.render);
+    //this.listenTo(this.collection, 'sync', this.render);
   },
 
   render: function() {
