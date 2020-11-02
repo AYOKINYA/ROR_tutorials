@@ -8,12 +8,20 @@ _.templateSettings = {
     evaluate: /\{\{(.+?)\}\}/g,
   };
 
-var App = {};
+var Chat = {};
 
 $(function() {
 
-    App.Person = Backbone.Model.extend({});
-    App.View = Backbone.View.extend({
+    Chat.Message = Backbone.Model.extend({
+        url: '/messages.json'
+    });
+
+    Chat.Messages = Backbone.Collection.extend({
+        mode: Chat.Message,
+        url: '/messages.json'
+    });
+
+    Chat.View = Backbone.View.extend({
         el: "#message-form",
         template: _.template($('#form-tpl').html()),
         
@@ -37,10 +45,10 @@ $(function() {
           console.log($msg.val());
         }
     });
-    var person = new App.Person({
-        name: 'Thomas',
-        message: "Hello Everyone!"
-    }),
-    app = new App.View({model: person});
-    app.render();
+    
+    var msg = new Chat.Message();
+    var chat = new Chat.View({model: msg});
+    chat.render();
 });
+
+export default Chat;
