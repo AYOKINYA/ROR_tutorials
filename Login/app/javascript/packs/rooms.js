@@ -90,3 +90,4 @@ var RoomsView = new RoomsListView({collection: RoomsList});
 RoomsList.fetch();
 
 });
+
