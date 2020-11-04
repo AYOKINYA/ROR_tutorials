@@ -49,17 +49,14 @@ $(function() {
 
       initialize: function () {
         this.input = this.$('#new-msg');
-        this.collection.on('add', this.addAll, this);
-        this.collection.on('reset', this.addAll, this);
         this.collection.fetch();
       },
       events: {
-        'keypress #new-msg': 'createMessageOnEnter'
+        'submit': 'createMessage'
       },
-      createMessageOnEnter: function(e){
-        if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
-          return ;
-        }
+      createMessage: function(e){
+
+        const $auth_token = this.$('#auth-token');
         this.collection.create(this.newAttributes());
         this.input.val(''); // clean input box
       },
@@ -73,18 +70,22 @@ $(function() {
       },
       newAttributes: function(){
         const $room_id = this.$('#room-id');
-        //const $user_id = this.$('#user-id');
-        //user_id: $room_id.val(),
-        console.log($room_id.val());
+        const $user_id = this.$('#user-id');
+        const $auth_token = this.$('#auth-token');
+  
         return {
+          authenticity_token : $auth_token.val(),
+          content: this.input.val().trim(),
+          user_id: $user_id.val(),
           room_id: $room_id.val(),
-          content: this.input.val().trim()
         }
       }
     });
 
     var msgs = new Chat.Messages();
     var chat = new Chat.View({collection: msgs});
+
+    
 });
 
 export default Chat;
