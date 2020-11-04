@@ -33,22 +33,19 @@ $(function() {
       },      
       events: {
         
-      },
-
-      close: function(){
-        var value = this.input.val().trim();
-        if (value) {
-          this.model.save({content: value});
-        }
-        this.$el.removeClass('editing');
-      },      
+      },   
     });
 
     Chat.View = Backbone.View.extend({
       el: '#msg-app',
 
       initialize: function () {
+        this.listenTo(this.collection, 'sync', this.render);
+        this.listenTo(this.collection, 'change', this.render);
         this.input = this.$('#new-msg');
+        console.log("Hello");
+        //this.collection.on('add', this.addAll, this);
+        //this.collection.on('reset', this.addAll, this);
         this.collection.fetch();
       },
       events: {
@@ -56,7 +53,6 @@ $(function() {
       },
       createMessage: function(e){
 
-        const $auth_token = this.$('#auth-token');
         this.collection.create(this.newAttributes());
         this.input.val(''); // clean input box
       },
@@ -84,7 +80,6 @@ $(function() {
 
     var msgs = new Chat.Messages();
     var chat = new Chat.View({collection: msgs});
-
     
 });
 

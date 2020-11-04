@@ -1,12 +1,11 @@
 <section id="msg-app">
     <header id="header">
-      <h1>Messages</h1>
       <form id ="create-message">
       <input id="auth-token" type="hidden" value= "<%= form_authenticity_token %>" >
       <input id="room-id" type="hidden" value= "<%= room.id %>" >
       <input id="user-id" type="hidden" value= "<%= current_user.id %>" >
-      <input id="new-msg" placeholder="What needs to be done?" autofocus>
-      <button type=submit class="btn btn-outline-succes">CREATE</button>
+      <input id="new-msg" placeholder="Add Message here!">
+      <button type=submit class="btn btn-outline-success">CREATE</button>
       </form>
     </header>
     <section id="main">
