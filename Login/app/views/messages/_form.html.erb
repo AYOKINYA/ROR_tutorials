@@ -1,12 +1,23 @@
+<section id="msg-app">
+    <header id="header">
+      <h1>Messages</h1>
+      <input id="room-id" type="hidden" value= "<%= room.id %>" >
+      <input id="user-id" type="hidden" value= "<%= current_user.id %>" >
+      <input id="new-msg" placeholder="What needs to be done?" autofocus>
+    </header>
+    <section id="main">
+      <ul id="msg-list"></ul>
+    </section>
+  </section>
 
-<script type="text/template" id="form-tpl">
-    <label>Message:</label>
-    <input type="text" id="message">
-    <button class=show>SHOW</button>
-</script>
+  <!-- Templates -->
+  <script type="text/template" id="item-template">
+    <div class="view">
+      <label>{{= content }}</label>
+    </div>
+  </script>
 
-<div id="message-form">
-</div>
+<div id="message-form"></div>
 
 <%= form_with(model: message, local: true, class:'form-inline') do |form| %>
   <% if message.errors.any? %>
