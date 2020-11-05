@@ -11,9 +11,8 @@ class RoomsController < ApplicationController
   # GET /rooms/1.json
   def show
     @rooms = Room.all
-    render 'index'
+    render "index"
   end
-
   # GET /rooms/new
   def new
     @room = Room.new

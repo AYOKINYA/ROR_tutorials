@@ -26,9 +26,9 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     @message.user = current_user
-    @message.save
-
-    SendMessageJob.perform_later(@message)
+    if @message.save
+      SendMessageJob.perform_later(@message)
+    end
   end
 
   # PATCH/PUT /messages/1
