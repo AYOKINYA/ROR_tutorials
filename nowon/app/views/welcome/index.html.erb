@@ -1,2 +1,21 @@
 <h1>Welcome#index</h1>
 <p>Hi Everyone</p>
+
+<div id="room-id" data-room-id="<%= @room.try(:id) %>"></div>
+<div id="user-id" data-user-id="<%= current_user.id %>"></div>
+
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-3 rooms-sidebar">
+          <div class="card no-outline">
+            <div class="card-body">
+              <small>Logged in as</small><br>
+              <b><%= current_user.username %><br></b>
+              <br><b>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"button is-info" %>
+              </b>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
