@@ -16,6 +16,25 @@
               </b>
             </div>
           </div>
+              <br>
+              [Online User List] <br>
+              ===============
+              <% @users = User.all %>
+              <% @users.each do |user| %>
+                <%= user.username %><br/>
+              <% end %>
+              ===============
+              <script type="text/template" id="user-item-tmpl">
+              <a href="/users/{{=id}}">
+              {{=id}}
+              {{=username}}
+              </a>
+              </script>
+
+              <div id="users-app">
+                  <div class="users-list">
+              </div>
+              ================
         </div>
     </div>
 </div>
