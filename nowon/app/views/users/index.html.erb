@@ -1,19 +1,5 @@
 <h1>Users#index</h1>
 
-<% @users.each do |user| %>
-   <%= user.id %> <%= user.username %><br/>
-    
-<% end %>
+<%= render 'search_bar' %>
 
-=====Backbone=====
-
-<script type="text/template" id="user-item-tmpl">
-    <a href="/users/{{=id}}">
-        {{=id}}
-        {{=username}}
-    </a>
-</script>
-
-<div id="users-app">
-    <div class="users-list">
-</div>
+<%= render 'list' %>
