@@ -18,7 +18,7 @@ $(function() {
     model: UserModel,
     url: '/users.json'
   });
-  
+
   var UsersListItemView = Backbone.View.extend({
     //tagName: 'li',
     className: 'user',

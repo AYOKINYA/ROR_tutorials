@@ -35,19 +35,7 @@
                   <div class="users-list">
               </div>
               ================
-              <% @users = User.all %>
-              <% @users.each do |user| %>
-                <% if user.username == "jkang" %>
-                  <%= user.username %><br/>
-                <% end %>
-              <% end %>
-              =================
-              <% form_tag users_path, :method => 'get' do %>
-              <p>
-                <%= text_field_tag :keyword, params[:keyword] %>
-                <%= submit_tag "Search", :username => nil %>
-              </p>
-            <% end %>
+
         </div>
     </div>
 </div>
