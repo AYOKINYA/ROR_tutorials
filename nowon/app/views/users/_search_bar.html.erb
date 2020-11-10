@@ -15,18 +15,16 @@
         </a>  
     <% end %>
 <% end %>
-==============
 
-<section id="view-searched-users">
-  <form id="search-user">
-    <input id="search-user-name" type="search" placeholder="Type username">
-    <button type="submit">Search</button>
-  </form>
-  <ul id="searched-user-list"></ul>
-</section>
+==== Backbone ====
 
-<script type="text/template" name="searched-user-item-tmpl">
-{{= username}}
-Hello
+<div id="search-app">
+  <label>username: <input id="username-input" type="text"></label>
+  <button class="search">Search</button>
+  <br>=======FOUND users=========
+  <ul id="search-user-list"></ul>
+</div>
+
+<script type="text/template" id="found-item-tmpl">
+<a href="/users/{{= id}}">{{= username}} </a>
 </script>
-==============
