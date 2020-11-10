@@ -31,7 +31,7 @@ $(function() {
 	},
 	
       events: {
-        'click .search' : 'search_user'
+        'click #search' : 'search_user'
       },
       
       search_user: function(e) {

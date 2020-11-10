@@ -16,28 +16,9 @@
               </b>
             </div>
           </div>
-              <br>
-              [Online User List] <br>
-              ===============
-              <% @users = User.all %>
-              <% @users.each do |user| %>
-                <%= user.username %><br/>
-              <% end %>
-
-              ===Backbone===
-
-              <div id="search-app">
-              <label>username: <input id="username-input" type="text"></label>
-              <button class="search">Search</button>
-              <br>===FOUND users===
-              <ul id="search-user-list"></ul>
-            </div>
-
-            <script type="text/template" id="found-item-tmpl">
-            <a href="/users/{{= id}}">{{= username}} </a>
-            </script>
-             
-
+           <%= render 'users/search_bar' %>
+           <%= render 'users/list' %>
         </div>
     </div>
 </div>
+
