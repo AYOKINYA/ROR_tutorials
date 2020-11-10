@@ -69,7 +69,9 @@ $(function() {
     },
   
   });
+
     var UsersList = new UserCollection();
     var UsersView = new UsersListView({collection: UsersList});
     UsersList.fetch();
+
 });
