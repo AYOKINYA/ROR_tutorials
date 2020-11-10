@@ -24,15 +24,15 @@
                 <%= user.username %><br/>
               <% end %>
               ===============
-              <script type="text/template" id="user-item-tmpl">
-              <a href="/users/{{=id}}">
-              {{=id}}
-              {{=username}}
-              </a>
+              <script type="text/template" id="search-item-tmpl">
+                {{=username}}
+                Hello!
               </script>
 
-              <div id="users-app">
-                  <div class="users-list">
+              <div id="search-app">
+              <label>username: <input id="username-input" type="text"></label>
+              <button class="search">Search</button>
+                  <div class="search-list">
               </div>
               ================
 
