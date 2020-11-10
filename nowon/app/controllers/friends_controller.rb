@@ -6,7 +6,10 @@ class FriendsController < ApplicationController
       friend = User.find_by(id: id)
       res.push(friend)
     end
-    render json: res
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render :json => res}
+    end
   end
 
   def show

@@ -12,6 +12,8 @@ const $ = require("jquery");
 require("backbone")
 import './users_list.js'
 import './users_search.js'
+import './friends_list.js'
+
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference
