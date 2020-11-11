@@ -13,13 +13,14 @@ class FriendsController < ApplicationController
   end
 
   def show
-    friend = User.find(id: params[:id])
+    friend = User.find(params[:id])
     render json: friend
   end
 
   def update
+
       @list = User.find_by(id: current_user[:id])[:friend_list]
-      if params[:id] == current_user[:id] || @list.include?(params[:id])
+      if params[:id].to_i == current_user[:id] || @list.include?(params[:id])
         return
       end
 
