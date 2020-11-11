@@ -80,8 +80,11 @@ $(function() {
     add_friend: function (e) {
       const id = this.$('#user-id').val();
       const name = this.$('#user-name').val();
+      const curr_name = this.$('#current-user-name').val();
       console.log(id);
       console.log(name);
+      if (name == curr_name)
+        return ;
       const new_friend = new FriendModel({ id: id, username: name });
       friends.fetch({
         success: function() {

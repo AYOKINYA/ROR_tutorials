@@ -1,21 +1,5 @@
 <h1>Friends#index</h1>
 
-<hr>
-<script type="text/template" id="friend-item-tmpl">
-{{_.each(friends, function(friend, i) { }}
-		<li class="list-group-item">{{= friend.username}}
-            <input id="user-id" type="hidden" value ="{{= friend.username}}">
-			<button class="btn btn-danger btn-sm float-right remove-friend" user-id="{{=friend.id}}">
-				remove friend
-			</button>
-		</li>
-{{ }) }}
-</script>
+<%= render 'friends/friend_list' %>
 
-<div id="friends-app">
-    ==My Friends==
-    <div id="friends-list">
-</div>
-
-<hr>
 <%= render 'users/search_bar' %>

@@ -1,3 +1,5 @@
+<hr>
+
 <div id="search-app">
   <label>username: <input id="username-input" type="text" class="form-control"></label>
   <button id="search" class="btn btn-info glyphicon glyphicon-search">Search</button>
@@ -8,5 +10,6 @@
 <a href="/users/{{= id}}"> {{=id}} {{= username}} </a> 
 <input id="user-id" type="hidden" value ="{{=id}}">
 <input id="user-name" type="hidden" value ="{{=username}}">
+<input id="current-user-name" type="hidden" value ="<%=current_user.username %>">
 <button id="add-friend">Add Friend</button>
 </script>
