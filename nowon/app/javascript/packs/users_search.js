@@ -42,6 +42,7 @@ $(function() {
     url: "/friends"
 
   })
+
   const friends = new FriendCollection;
 
   var SearchListView = Backbone.View.extend({
@@ -55,42 +56,42 @@ $(function() {
       this.collection.fetch();	  
 	},
 	
-      events: {
-        'click #search' : 'search_user',
-        'click #add-friend' : 'add_friend'
-      },
-      
-      search_user: function(e) {
-        e.preventDefault();
-        const name = this.$('#username-input').val();
-        console.log("=======");
-        console.log(name);
-        console.log("=======");
-        var found = _.find(this.collection.models, function(item){
-          return item.get('username') === name;
-        });
-        if (!found)
-          return ;
-        var html = this.template(found.toJSON());
-        console.log(html);
-        this.$el.find('#search-user-list').html(html);
-      },
-
-      add_friend: function (e) {
-        const id = this.$('#user-id').val();
-        console.log(id);
-				const new_friend = new FriendModel({ id: id });
-				friends.fetch({
-					success: function() {
-						friends.add(new_friend);
-						new_friend.save();
-						//this.collection.remove(this.collection.where({ id: id })[0]);
-					}
-				});
-			},
-      
-      });
+    events: {
+      'click #search' : 'search_user',
+      'click #add-friend' : 'add_friend'
+    },
     
+    search_user: function(e) {
+      e.preventDefault();
+      const name = this.$('#username-input').val();
+      console.log("=======");
+      console.log(name);
+      console.log("=======");
+      var found = _.find(this.collection.models, function(item){
+        return item.get('username') === name;
+      });
+      if (!found)
+        return ;
+      var html = this.template(found.toJSON());
+      console.log(html);
+      this.$el.find('#search-user-list').html(html);
+    },
+
+    add_friend: function (e) {
+      const id = this.$('#user-id').val();
+      console.log(id);
+      const new_friend = new FriendModel({ id: id });
+      friends.fetch({
+        success: function() {
+          friends.add(new_friend);
+          new_friend.save();
+          //this.collection.remove(this.collection.where({ id: id })[0]);
+        }
+      });
+    },
+      
+    });
+
       var FriendsListItemView = Backbone.View.extend({
     
         template: _.template($('#friend-item-tmpl').html()),
@@ -103,8 +104,6 @@ $(function() {
           var html = this.template(this.model.toJSON());
           console.log(html);
           this.$el.html(html);
-          
-          console.log(this.model.get("friend_list"));
       
           return (this);
         },
@@ -120,28 +119,31 @@ $(function() {
       
       var FriendsListView = Backbone.View.extend({
         el: '#friends-app',
-      
+
+        template: _.template($('#friend-item-tmpl').html()),
+
         initialize: function() {
-          this.collection = new FriendCollection;
-          this.collection.fetch();
+          this.collection = friends;
           this.listenTo(this.collection, 'sync', this.render);
+          this.collection.fetch();
         },
       
         render: function() {
+
+          console.log("<<<render friends list>>>");
           var $list = this.$('#friends-list').empty();
-      
+          
           this.collection.each(function(model) {
             var item = new FriendsListItemView({model: model});
             $list.append(item.render().$el);
           }, this);
-      
-          return this;
-        },
-      
-        events: {
+
+          // this.$("#friends-list").html(this.template({friends: this.collection.toJSON()}));
+  
         },
       
       });
-      var SearchView = new SearchListView;
-      var FriendsView = new FriendsListView();
+    var FriendsView = new FriendsListView();
+    var SearchView = new SearchListView();
+    
 });

@@ -12,7 +12,6 @@ const $ = require("jquery");
 require("backbone")
 import './users_list.js'
 import './users_search.js'
-import './friends_list.js'
 
 
 
