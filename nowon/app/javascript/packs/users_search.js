@@ -91,56 +91,36 @@ $(function() {
     },
       
     });
-
-      var FriendsListItemView = Backbone.View.extend({
-    
-        template: _.template($('#friend-item-tmpl').html()),
-        
-        initialize: function() {
-          this.listenTo(this.model, 'destroy', this.remove)
-        },
-      
-        render: function() {
-          var html = this.template(this.model.toJSON());
-          console.log(html);
-          this.$el.html(html);
-      
-          return (this);
-        },
-      
-        events: {
-          'click #remove-friend': 'onRemove'
-        },
-      
-        onRemove: function() {
-          this.model.destroy();
-        }
-      });
       
       var FriendsListView = Backbone.View.extend({
-        el: '#friends-app',
+        el: '#friends-list',
 
         template: _.template($('#friend-item-tmpl').html()),
+
+        events: {
+          'click .remove-friend': 'remove_friend'
+        },
 
         initialize: function() {
           this.collection = friends;
           this.listenTo(this.collection, 'sync', this.render);
+          //this.listenTo(this.collection, 'add', this.render);
+          this.listenTo(this.collection, 'destroy', this.render);
           this.collection.fetch();
         },
       
         render: function() {
-
           console.log("<<<render friends list>>>");
-          var $list = this.$('#friends-list').empty();
-          
-          this.collection.each(function(model) {
-            var item = new FriendsListItemView({model: model});
-            $list.append(item.render().$el);
-          }, this);
-
-          // this.$("#friends-list").html(this.template({friends: this.collection.toJSON()}));
-  
+          this.$el.html(this.template({friends: this.collection.toJSON()}));
         },
+
+        remove_friend: function(e) {
+          var user_id = e.currentTarget.getAttribute("user-id");
+          console.log(user_id);
+          
+          var byebye = this.collection.get(user_id);
+          byebye.destroy();
+        }
       
       });
     var FriendsView = new FriendsListView();

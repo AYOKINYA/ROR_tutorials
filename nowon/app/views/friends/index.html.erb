@@ -2,12 +2,14 @@
 
 <hr>
 <script type="text/template" id="friend-item-tmpl">
-<a href="/users/{{=id}}">
-        {{=id}}
-        {{=username}}
-</a>
-<input id="user-id" type="hidden" value ="{{=id}}">
-<button id="remove-friend">Remove Friend</button>
+{{_.each(friends, function(friend, i) { }}
+		<li class="list-group-item">{{= friend.username}}
+            <input id="user-id" type="hidden" value ="{{= friend.username}}">
+			<button class="btn btn-danger btn-sm float-right remove-friend" user-id="{{=friend.id}}">
+				remove friend
+			</button>
+		</li>
+{{ }) }}
 </script>
 
 <div id="friends-app">
