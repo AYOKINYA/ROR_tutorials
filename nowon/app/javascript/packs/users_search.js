@@ -22,7 +22,7 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
 $(function() {
 
   var SearchModel = Backbone.Model.extend({
-    urlRoot: '/search'
+    urlRoot: '/users'
   });
   
   var SearchCollection = Backbone.Collection.extend({
@@ -79,13 +79,14 @@ $(function() {
 
     add_friend: function (e) {
       const id = this.$('#user-id').val();
+      const name = this.$('#user-name').val();
       console.log(id);
-      const new_friend = new FriendModel({ id: id });
+      console.log(name);
+      const new_friend = new FriendModel({ id: id, username: name });
       friends.fetch({
         success: function() {
           friends.add(new_friend);
           new_friend.save();
-          //this.collection.remove(this.collection.where({ id: id })[0]);
         }
       });
     },
@@ -104,7 +105,6 @@ $(function() {
         initialize: function() {
           this.collection = friends;
           this.listenTo(this.collection, 'sync', this.render);
-          //this.listenTo(this.collection, 'add', this.render);
           this.listenTo(this.collection, 'destroy', this.render);
           this.collection.fetch();
         },
