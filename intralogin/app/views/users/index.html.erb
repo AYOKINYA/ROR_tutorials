@@ -1,0 +1,13 @@
+  <%= link_to "Sign in with 42", user_marvin_omniauth_authorize_path, :method => :post%>
+
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+<br>
+
+  == supposed to be ==
+  https://api.intra.42.fr/oauth/authorize?client_id=5e7ac3dcc99b8d9cbfadbdbfdaf0807f2361952b0a92a8d770e145758e0f15ae&
+  redirect_uri=http%3A%2F%2Flocalhost%3A3000&
+  response_type=code
+
+  <%= current_user.email %>
+
+
