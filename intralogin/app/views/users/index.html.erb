@@ -1,4 +1,4 @@
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+
   <% if current_user.otp_required_for_login? && !user_session["otp_done"] %>
     <%= render "otp_auth/otp_auth"  %>
   <% end %>

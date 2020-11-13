@@ -23,6 +23,15 @@ class TwoFactorSettingsController < ApplicationController
         render :new
       end
     end
+
+    def update
+        if current_user[:otp_required_for_login] == true
+          disable_two_factor
+        else
+          enable_two_factor
+        end
+        redirect_to edit_user_registration_path
+    end
   
     def edit
       unless current_user.otp_required_for_login
@@ -40,7 +49,7 @@ class TwoFactorSettingsController < ApplicationController
     end
   
     def destroy
-      if current_user.disable_two_factor!
+      if disable_two_factor #current_user.disable_two_factor!
         flash[:notice] = 'Successfully disabled two factor authentication.'
         redirect_to edit_user_registration_path
       else
@@ -54,5 +63,17 @@ class TwoFactorSettingsController < ApplicationController
     def enable_2fa_params
       params.require(:two_fa).permit(:code, :password)
     end
-  
+
+    def enable_two_factor
+      current_user.update(
+      #otp_secret: User.generate_otp_secret,
+      otp_required_for_login: true,
+      #otp_backup_codes: current_user.generate_otp_backup_codes!
+      )
+    end
+
+    def disable_two_factor
+      current_user.update(otp_required_for_login: false)
+    end
+
   end
