@@ -6,9 +6,11 @@ module AuthenticateWithOtpTwoFactor
   
       if user_params[:otp_attempt].present? && session[:otp_user_id]
         authenticate_user_with_otp_two_factor(user)
+        user_session["otp_done"] = 1 # omniauth login이랑 local login이랑 달라서...
       elsif user&.valid_password?(user_params[:password])
         prompt_for_otp_two_factor(user)
       end
+
     end
   
     private
@@ -29,7 +31,6 @@ module AuthenticateWithOtpTwoFactor
       if valid_otp_attempt?(user)
         # Remove any lingering user data from login
         session.delete(:otp_user_id)
-  
         remember_me(user) if user_params[:remember_me] == '1'
         user.save!
         sign_in(user, event: :authentication)
