@@ -1,0 +1,19 @@
+<hr>
+<script type="text/template" id="friend-item-tmpl">
+{{_.each(friends, function(friend, i) { }}
+		<li class="list-group-item"><a href="/users/{{= friend.id}}"> {{= friend.name}}</a>
+            <input id="user-id" type="hidden" value ="{{= friend.name}}">
+			<button class="btn btn-danger btn-sm float-right remove-friend" user-id="{{=friend.id}}">
+				remove friend
+			</button>
+		</li>
+{{ }) }}
+</script>
+
+<div id="friends-app">
+    ==My Friends==
+    <div id="friends-list">
+</div>
+
+<hr>
+<%= render 'users/search_bar' %>

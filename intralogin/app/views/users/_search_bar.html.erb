@@ -1,0 +1,15 @@
+<hr>
+
+<div id="search-app">
+  <label>name: <input id="username-input" type="text" class="form-control"></label>
+  <button id="search" class="btn btn-info glyphicon glyphicon-search">Search</button>
+  <ul id="search-user-list"></ul>
+</div>
+
+<script type="text/template" id="found-item-tmpl">
+<a href="/users/{{= id}}"> {{=id}} {{= name}} </a> 
+<input id="user-id" type="hidden" value ="{{=id}}">
+<input id="user-name" type="hidden" value ="{{=name}}">
+<input id="current-user-name" type="hidden" value ="<%=current_user.name %>">
+<button id="add-friend">Add Friend</button>
+</script>
