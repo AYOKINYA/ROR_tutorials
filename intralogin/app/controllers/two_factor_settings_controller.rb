@@ -40,12 +40,19 @@ class TwoFactorSettingsController < ApplicationController
       end
   
       if current_user.two_factor_backup_codes_generated?
+        puts "nooryuk"
         flash[:alert] = 'You have already seen your backup codes.'
         return redirect_to edit_user_registration_path
       end
   
       @backup_codes = current_user.generate_otp_backup_codes!
       current_user.save!
+      puts current_user.inspect
+
+      puts "======"
+      puts current_user.otp_backup_codes
+      puts "======"
+      
     end
   
     def destroy
