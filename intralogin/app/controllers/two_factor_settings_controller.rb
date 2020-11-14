@@ -14,12 +14,10 @@ class TwoFactorSettingsController < ApplicationController
       if current_user.validate_and_consume_otp!(enable_2fa_params[:code])
         current_user.enable_two_factor!
   
-        flash[:notice] = 'Successfully enabled two factor authentication, please make note of your backup codes.'      
-        puts "here?"
+        flash[:notice] = 'Successfully enabled two factor authentication, please make note of your backup codes.'
         redirect_to edit_two_factor_settings_path
       else
         flash.now[:alert] = 'Incorrect Code'
-        puts "incorrect password"
         render :new
       end
     end
@@ -40,18 +38,12 @@ class TwoFactorSettingsController < ApplicationController
       end
   
       if current_user.two_factor_backup_codes_generated?
-        puts "nooryuk"
         flash[:alert] = 'You have already seen your backup codes.'
         return redirect_to edit_user_registration_path
       end
   
       @backup_codes = current_user.generate_otp_backup_codes!
       current_user.save!
-      puts current_user.inspect
-
-      puts "======"
-      puts current_user.otp_backup_codes
-      puts "======"
       
     end
   
@@ -73,9 +65,7 @@ class TwoFactorSettingsController < ApplicationController
 
     def enable_two_factor
       current_user.update(
-      #otp_secret: User.generate_otp_secret,
       otp_required_for_login: true,
-      #otp_backup_codes: current_user.generate_otp_backup_codes!
       )
     end
 
