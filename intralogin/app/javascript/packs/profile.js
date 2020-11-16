@@ -26,10 +26,15 @@ $(function() {
     el: '#profile-app',
 
     template: _.template($('#profile-tmpl').html()),
-    
+    tagName: "li",
+    events: {
+      "dblclick .view" : "edit",
+      "blur .edit" : "close"
+    },
+
     initialize: function() {
       this.model.fetch();
-      this.listenTo(this.model, 'sync', this.render)
+      this.listenTo(this.model, 'sync', this.render);
     },
   
     render: function() {
@@ -39,13 +44,24 @@ $(function() {
       console.log(this.model.get("nickname"));
   
       var $profile = this.$('.my-profile').empty();
-  
       $profile.append(this.$el.html(html).$el);
-
     },
   
-    events: {
+    edit: function() {
+      console.log('here?')
+      this.$('.edit').disabled = false;
+      this.input = this.$('.edit');
+      this.input.focus();
+    },
+
+    close: function() {
       
+      var new_nickname = this.$('.edit').val();
+      if (!new_nickname) {
+        this.close;
+      } else {
+        this.model.save({nickname: new_nickname});
+      }
     },
   
   });

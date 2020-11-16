@@ -4,29 +4,31 @@
         <div class="col-4 rooms-sidebar">
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
         <br>
-        <script type="text/template" id="profile-tmpl">
-        <img src="{{=avatar_url}}" width ="200"/>
-          <div class="card no-outline">
-            <div class="card-body">
-              <small>Logged in as</small><br>
-                <b>{{=nickname }}<br></b>
-              <br><b>
-                <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"button is-info" %>
-              </b>
-            </div>
-          </div>
-        </script>
            <div id="profile-app">
             <input id="cur-user-id" type="hidden" value ="<%= current_user.id %>">
             <input id="cur-user-nickname" type="hidden" value ="<%= current_user.nickname %>">
-            <div class="my-profile">
-            </div>
+            <div class="my-profile"></div>
         </div>
         <%= render 'friends/friend' %>
     </div>
   <%= render 'users/list' %>
 </div>
 
+<script type="text/template" id="profile-tmpl">
+  <img src="{{=avatar_url}}" width ="200"/>
+    <div class="card no-outline">
+      <div class="card-body">
+        <small>Logged in as</small><br>
+        <div class="view">
+          <label>{{=nickname }}</label>
+        </div>
+        <input class="edit" type="text" value="{{=nickname}}" />
+        <br><b>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"button is-info" %>
+        </b>
+      </div>
+    </div>
+</script>
 
 
 
