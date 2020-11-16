@@ -11,7 +11,7 @@ _.templateSettings = {
 $(function() {
 
   var UserModel = Backbone.Model.extend({
-    urlRoot: '/users.json'
+    urlRoot: '/users'
   });
   
   var UserCollection = Backbone.Collection.extend({
@@ -20,11 +20,10 @@ $(function() {
   });
 
   var UsersListItemView = Backbone.View.extend({
-    //tagName: 'li',
+
     className: 'user',
     template: _.template($('#user-item-tmpl').html()),
     
-  
     initialize: function() {
       this.listenTo(this.model, 'destroy', this.remove)
     },
@@ -51,7 +50,12 @@ $(function() {
     el: '#users-app',
   
     initialize: function() {
+      this.model = UserModel
       this.listenTo(this.collection, 'sync', this.render);
+    },
+
+    events: {
+      'click #change-name': 'change_name'
     },
   
     render: function() {
@@ -64,8 +68,13 @@ $(function() {
   
       return this;
     },
-  
-    events: {
+
+    change_name: function() {
+
+      this.model.set({
+        nickname: this.$('#user-nickname').val()
+      })
+      this.collection.fetch();
     },
   
   });

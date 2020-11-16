@@ -1,6 +1,13 @@
   
 users#show
 <hr>
-name is : <%= @user.name %>
-nickname is : <%= @user.nickname %>
-email is : <%= @user.email %>
+<img src="<%= @user.avatar_url %>" width ="200"/> <br>
+name : <%= @user.name %> <br>
+nickname : <%= @user.nickname %> <br>
+email : <%= @user.email %> <br>
+status :
+<% if @user.status == 0 %>
+    offline
+<% elsif @user.status == 1 %>
+    online
+<% end %>

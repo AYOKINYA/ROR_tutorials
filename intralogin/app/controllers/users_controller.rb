@@ -16,6 +16,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # PATCH | PUT /users/1
+  # PATCH | PUT /users/1.json
+  def update
+    if params[:id] != current_user[:id]
+      render plain: "forbidden", status: :forbidden
+    end
+    if params[:nickname].length > 20
+      render plain: "The length of the nickname must be shorter than 20", status: :forbidden
+    end
+    @user = User.find(params[:id])
+    @user.nickame = params[:nickname]
+    @user.save!
+    render json: @user
+  end
+
   def search
     if params[:search].blank?
        redirect_to users_path and return
