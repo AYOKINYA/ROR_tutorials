@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'user_status/show'
+  get 'user_status/update'
   resources :messages
   resources :rooms
   resources :friends
@@ -12,4 +14,7 @@ Rails.application.routes.draw do
   resource :two_factor_settings, except: [:index, :show]
   resource :otp_auth, except: [:index, :show]
   root 'users#index'
+
+  resources :user_status, only: [:index, :show, :update]
+
 end

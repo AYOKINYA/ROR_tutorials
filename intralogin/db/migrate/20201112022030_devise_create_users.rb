@@ -36,7 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       t.string :otp_backup_codes
       t.string :avatar_url
       t.string :friend_list, default: [], array: true
-
+      t.integer :status, default: 0
 
       t.timestamps null: false
     end

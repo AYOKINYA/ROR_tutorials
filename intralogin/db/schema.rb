@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_11_14_075022) do
     t.string "otp_backup_codes"
     t.string "avatar_url"
     t.string "friend_list", default: [], array: true
+    t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "provider"
