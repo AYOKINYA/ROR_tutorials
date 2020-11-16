@@ -6,4 +6,4 @@
   <% if !current_user.otp_required_for_login? || user_session["otp_done"] %>
     <%= render 'users/my_profile' %>
   <% end %>
-  <%= render 'users/list' %>
+  

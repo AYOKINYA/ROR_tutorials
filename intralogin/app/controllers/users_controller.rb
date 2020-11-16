@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     if params[:nickname].length > 20
       render plain: "The length of the nickname must be shorter than 20", status: :forbidden
     end
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]) || User.find(params[:nickname])
     @user.nickame = params[:nickname]
     @user.save!
     render json: @user
