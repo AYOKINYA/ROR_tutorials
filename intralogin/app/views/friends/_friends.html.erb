@@ -5,7 +5,7 @@
 			<div id="view-user-profile">
 			<b>{{= friend.name}}</b>
 			</div>
-            <input id="user-id" type="hidden" value ="{{= friend.id}}">
+            <input id="user-id" type="hidden" value ="{{= friend.id}}" />
 			{{ if (friend.status == 0) { }}
 				offline
 			{{ } else if (friend.status == 1) { }}
@@ -18,25 +18,10 @@
 {{ }) }}
 </script>
 
-<script type="text/template" id="friend-profile-tmpl">
-{{= id}}
-{{= nickname}}
-{{ if (status == 0) { }}
-	offline
-{{ } else if (status == 1) { }}
-	online
-{{ } }}
-</script>
-
-<div id="tmp">
-tmp
+==My Friends==
+<div id="friends-list">
 </div>
 
-
-<div id="friends-app">
-    ==My Friends==
-    <div id="friends-list">
-</div>
 
 <hr>
 <%= render 'users/search_bar' %>

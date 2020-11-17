@@ -106,8 +106,9 @@ $(function() {
         profile_template: _.template($('#friend-profile-tmpl').html()),
 
         events: {
-          'click .remove-friend': 'remove_friend',
-          'dblclick #view-user-profile' : 'view_profile'
+          'click .remove-friend' : 'remove_friend',
+          'dblclick #view-user-profile' : 'view_profile',
+          'click #close-profile' : 'close_profile'
         },
 
         initialize: function() {
@@ -118,7 +119,6 @@ $(function() {
         },
       
         render: function() {
-          console.log("<<<render friends list>>>");
           this.$el.html(this.item_template({friends: this.collection.toJSON()}));
         },
 
@@ -137,12 +137,15 @@ $(function() {
           profilemodel.fetch({
             success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
               console.log(profilemodel.toJSON());
-              console.log($('#tmp').html())
-              $('#tmp').html(this.profile_template(profilemodel.toJSON()));
+              console.log($('#friend-profile-view').html())
+              $('#friend-profile-view').html(this.profile_template(profilemodel.toJSON()));
             }
-          })
-          
-          
+          })  
+        },
+
+        close_profile: function(e) {
+          console.log("hello")
+          this.$('#friend-profile-view').empty();
         }
       
       });

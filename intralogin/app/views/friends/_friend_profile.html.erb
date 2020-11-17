@@ -1,0 +1,26 @@
+<script type="text/template" id="friend-profile-tmpl">
+<div class="card" style="width: 15rem;">
+    <button type="button" id="close-profile" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  <img src="{{= avatar_url}}" class="card-img-top" width="200">
+  <div class="card-body">
+    <h5>{{=nickname}}</h5>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">name : {{= name}}</li>
+    <li class="list-group-item">email: {{= email}}</li>
+    <li class="list-group-item">
+    current status : 
+    {{ if (status == 0) { }}
+        offline
+    {{ } else if (status == 1) { }}
+        online
+    {{ } }}
+    </li>
+  </ul>
+</div>
+</script>
+
+<div id="friend-profile-view">
+</div>
