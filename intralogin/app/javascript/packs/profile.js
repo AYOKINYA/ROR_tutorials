@@ -45,22 +45,22 @@ $(function() {
   
       var $profile = this.$('.my-profile').empty();
       $profile.append(this.$el.html(html).$el);
+      return this;
     },
   
     edit: function() {
-      console.log('here?')
-      this.$('.edit').disabled = false;
-      this.input = this.$('.edit');
-      this.input.focus();
+      this.$('.view').html('<input class="edit" type="text" />')
+      this.$('.edit').focus();
     },
 
     close: function() {
       
       var new_nickname = this.$('.edit').val();
       if (!new_nickname) {
-        this.close;
+        return ;
       } else {
         this.model.save({nickname: new_nickname});
+        this.$('.view').html('<label>' + new_nickname + '</label>')
       }
     },
   
