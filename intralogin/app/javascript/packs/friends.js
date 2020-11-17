@@ -44,6 +44,8 @@ $(function() {
   })
 
   const friends = new FriendCollection;
+  const user = new SearchModel;
+  const users = new SearchCollection;
 
   var SearchListView = Backbone.View.extend({
     el: '#search-app',
@@ -51,14 +53,14 @@ $(function() {
     template: _.template($('#found-item-tmpl').html()),
 
     initialize: function() {
-      this.model = new SearchModel;
-      this.collection = new SearchCollection;
+      this.model = user;
+      this.collection = users;
       this.collection.fetch();	  
 	},
 	
     events: {
       'click #search' : 'search_user',
-      'click #add-friend' : 'add_friend'
+      'click #add-friend' : 'add_friend',
     },
     
     search_user: function(e) {
@@ -99,10 +101,13 @@ $(function() {
       var FriendsListView = Backbone.View.extend({
         el: '#friends-list',
 
-        template: _.template($('#friend-item-tmpl').html()),
+        item_template: _.template($('#friend-item-tmpl').html()),
+
+        profile_template: _.template($('#friend-profile-tmpl').html()),
 
         events: {
-          'click .remove-friend': 'remove_friend'
+          'click .remove-friend': 'remove_friend',
+          'dblclick #view-user-profile' : 'view_profile'
         },
 
         initialize: function() {
@@ -114,7 +119,7 @@ $(function() {
       
         render: function() {
           console.log("<<<render friends list>>>");
-          this.$el.html(this.template({friends: this.collection.toJSON()}));
+          this.$el.html(this.item_template({friends: this.collection.toJSON()}));
         },
 
         remove_friend: function(e) {
@@ -123,6 +128,21 @@ $(function() {
           
           var byebye = this.collection.get(user_id);
           byebye.destroy();
+        },
+
+        view_profile: function(e) {
+          var id = this.$('#user-id').val();
+          console.log(id);
+          var profilemodel = new SearchModel({id: id});
+          profilemodel.fetch({
+            success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
+              console.log(profilemodel.toJSON());
+              console.log($('#tmp').html())
+              $('#tmp').html(this.profile_template(profilemodel.toJSON()));
+            }
+          })
+          
+          
         }
       
       });

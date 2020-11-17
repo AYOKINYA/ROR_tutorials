@@ -1,8 +1,11 @@
 <hr>
 <script type="text/template" id="friend-item-tmpl">
 {{_.each(friends, function(friend, i) { }}
-		<li class="list-group-item"><a href="/users/{{= friend.id}}"> {{= friend.name}}</a>
-            <input id="user-id" type="hidden" value ="{{= friend.name}}">
+		<li class="list-group-item">
+			<div id="view-user-profile">
+			<b>{{= friend.name}}</b>
+			</div>
+            <input id="user-id" type="hidden" value ="{{= friend.id}}">
 			{{ if (friend.status == 0) { }}
 				offline
 			{{ } else if (friend.status == 1) { }}
@@ -14,6 +17,21 @@
 		</li>
 {{ }) }}
 </script>
+
+<script type="text/template" id="friend-profile-tmpl">
+{{= id}}
+{{= nickname}}
+{{ if (status == 0) { }}
+	offline
+{{ } else if (status == 1) { }}
+	online
+{{ } }}
+</script>
+
+<div id="tmp">
+tmp
+</div>
+
 
 <div id="friends-app">
     ==My Friends==

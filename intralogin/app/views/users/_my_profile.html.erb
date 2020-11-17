@@ -1,21 +1,32 @@
 
-		<div class="container-fluid">
-      <div class="row">
-        <div class="col-4 rooms-sidebar">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
         <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
         <br>
            <div id="profile-app">
-            <input id="cur-user-id" type="hidden" value ="<%= current_user.id %>">
-            <input id="cur-user-nickname" type="hidden" value ="<%= current_user.nickname %>">
-            <div class="my-profile"></div>
-        </div>
-        <%= render 'friends/friend' %>
+            <input id="cur-user-id" type="hidden" value ="<%= current_user.id %>" />
+            <input id="cur-user-nickname" type="hidden" value ="<%= current_user.nickname %>" />
+            <div class="my-profile">
+            </div>
+          </div>
+      <%= render 'friends/friends' %>     
     </div>
-  <%= render 'users/list' %>
+  </div>
+  <div class="col-3">
+    here?
+  </div>
+  <div class="col-3">
+    <%= render 'friends/friend_profile' %>
+  </div>
+</div>
 </div>
 
+<%= render 'users/list' %>
+
+
 <script type="text/template" id="profile-tmpl">
-  <img src="{{=avatar_url}}" width ="200"/>
+  <img src="{{=avatar_url}}" width ="190"/>
     <div class="card no-outline">
       <div class="card-body">
         <small>Logged in as</small><br>
@@ -28,6 +39,3 @@
       </div>
     </div>
 </script>
-
-
-

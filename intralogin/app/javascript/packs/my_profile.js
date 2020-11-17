@@ -22,7 +22,7 @@ $(function() {
     url: '/users.json'
   });
 
-  var ProfileView = Backbone.View.extend({
+  var MyProfileView = Backbone.View.extend({
     el: '#profile-app',
 
     template: _.template($('#profile-tmpl').html()),
@@ -68,6 +68,6 @@ $(function() {
     const id = window.$('#cur-user-id').val();
     console.log(id);
     var profile = new ProfileModel({id : id});
-    var profileView = new ProfileView({model: profile});
+    var myprofileView = new MyProfileView({model: profile});
 
 });

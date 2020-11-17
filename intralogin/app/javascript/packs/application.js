@@ -12,7 +12,7 @@ const $ = require("jquery");
 require("backbone")
 import './users_list.js'
 import './friends.js'
-import './profile.js'
+import './my_profile.js'
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
