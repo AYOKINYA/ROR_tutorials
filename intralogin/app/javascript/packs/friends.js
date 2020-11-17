@@ -98,58 +98,64 @@ $(function() {
       
     });
       
-      var FriendsListView = Backbone.View.extend({
-        el: '#friends-list',
+    var FriendsListView = Backbone.View.extend({
+      el: '#friends-list',
 
-        item_template: _.template($('#friend-item-tmpl').html()),
+      item_template: _.template($('#friend-item-tmpl').html()),
 
-        profile_template: _.template($('#friend-profile-tmpl').html()),
+      profile_template: _.template($('#friend-profile-tmpl').html()),
 
-        events: {
-          'click .remove-friend' : 'remove_friend',
-          'dblclick #view-user-profile' : 'view_profile',
-          'click #close-profile' : 'close_profile'
-        },
+      events: {
+        'click .remove-friend' : 'remove_friend',
+        'dblclick #view-user-profile' : 'view_profile',
+      },
 
-        initialize: function() {
-          this.collection = friends;
-          this.listenTo(this.collection, 'sync', this.render);
-          this.listenTo(this.collection, 'destroy', this.render);
-          this.collection.fetch();
-        },
-      
-        render: function() {
-          this.$el.html(this.item_template({friends: this.collection.toJSON()}));
-        },
+      initialize: function() {
+        this.collection = friends;
+        this.listenTo(this.collection, 'sync', this.render);
+        this.listenTo(this.collection, 'destroy', this.render);
+        this.collection.fetch();
+      },
+    
+      render: function() {
+        this.$el.html(this.item_template({friends: this.collection.toJSON()}));
+      },
 
-        remove_friend: function(e) {
-          var user_id = e.currentTarget.getAttribute("user-id");
-          console.log(user_id);
-          
-          var byebye = this.collection.get(user_id);
-          byebye.destroy();
-        },
+      remove_friend: function(e) {
+        var user_id = e.currentTarget.getAttribute("user-id");
+        console.log(user_id);
+        
+        var byebye = this.collection.get(user_id);
+        byebye.destroy();
+      },
 
-        view_profile: function(e) {
-          var id = this.$('#user-id').val();
-          console.log(id);
-          var profilemodel = new SearchModel({id: id});
-          profilemodel.fetch({
-            success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
-              console.log(profilemodel.toJSON());
-              console.log($('#friend-profile-view').html())
-              $('#friend-profile-view').html(this.profile_template(profilemodel.toJSON()));
-            }
-          })  
-        },
+      view_profile: function(e) {
+        var id = this.$('#user-id').val();
+        console.log(id);
+        var profilemodel = new SearchModel({id: id});
+        profilemodel.fetch({
+          success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
+            console.log(profilemodel.toJSON());
+            console.log($('#friend-profile-view').html())
+            $('#friend-profile-view').html(this.profile_template(profilemodel.toJSON()));
+          }
+        })  
+      },
+    
+    });
+    var FriendProfileView = Backbone.View.extend({
+      el: '#friend-profile-view',
+      events: {
+        'click #close-profile' : 'close_profile'
+      },
+      close_profile: function(e) {
+        console.log("hello")
+        this.$el.empty();
+      }
+    });
 
-        close_profile: function(e) {
-          console.log("hello")
-          this.$('#friend-profile-view').empty();
-        }
-      
-      });
     var FriendsView = new FriendsListView();
     var SearchView = new SearchListView();
+    var Friendprofile = new FriendProfileView();
     
 });
