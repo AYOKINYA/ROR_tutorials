@@ -41,8 +41,6 @@ $(function() {
     render: function() {
       var html = this.template(this.model.toJSON());
       this.$el.html(html);
-      
-      console.log(this.model.get("nickname"));
   
       var $profile = this.$('.my-profile').empty();
       $profile.append(this.$el.html(html).$el);
@@ -79,14 +77,13 @@ $(function() {
 					success: function(model) {
 						self.model.fetch();
 					},
-				});
+        });
 			}, false);
 			reader.readAsDataURL(file.files[0]);
     },
   
   });
     const id = window.$('#cur-user-id').val();
-    console.log(id);
     var profile = new ProfileModel({id : id});
     var myprofileView = new MyProfileView({model: profile});
 

@@ -31,9 +31,6 @@ $(function() {
     render: function() {
       var html = this.template(this.model.toJSON());
       this.$el.html(html);
-      
-      console.log(this.model.get("name"));
-  
       return (this);
     },
   

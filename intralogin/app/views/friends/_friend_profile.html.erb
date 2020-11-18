@@ -1,6 +1,6 @@
 <script type="text/template" id="friend-profile-tmpl">
 <div class="card" style="width: 15rem;">
-    <button type="button" id="close-profile" class="close" aria-label="Close">
+    <button type="button" id="close-profile" class="close float-right" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   <img src="{{= avatar_url}}" class="card-img-top" width="200">
@@ -19,6 +19,9 @@
     {{ } }}
     </li>
   </ul>
+  <button class="btn btn-success btn-sm send-dm" friend-id="{{id}}">
+				Send Direct Message
+	</button>
 </div>
 </script>
 

@@ -66,16 +66,12 @@ $(function() {
     search_user: function(e) {
       e.preventDefault();
       const name = this.$('#username-input').val();
-      console.log("=======");
-      console.log(name);
-      console.log("=======");
       var found = _.find(this.collection.models, function(item){
         return item.get('name') === name;
       });
       if (!found)
         return ;
       var html = this.template(found.toJSON());
-      console.log(html);
       this.$el.find('#search-user-list').html(html);
     },
 
@@ -83,8 +79,6 @@ $(function() {
       const id = this.$('#user-id').val();
       const name = this.$('#user-name').val();
       const curr_name = this.$('#current-user-name').val();
-      console.log(id);
-      console.log(name);
       if (name == curr_name)
         return ;
       const new_friend = new FriendModel({ id: id, name: name });
@@ -123,7 +117,6 @@ $(function() {
 
       remove_friend: function(e) {
         var user_id = e.currentTarget.getAttribute("user-id");
-        console.log(user_id);
         
         var byebye = this.collection.get(user_id);
         byebye.destroy();
@@ -135,8 +128,8 @@ $(function() {
         var profilemodel = new SearchModel({id: friend_id});
         profilemodel.fetch({
           success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
-            console.log(profilemodel.toJSON());
-            console.log($('#friend-profile-view').html())
+            // console.log(profilemodel.toJSON());
+            // console.log($('#friend-profile-view').html())
             $('#friend-profile-view').html(this.profile_template(profilemodel.toJSON()));
           }
         })  
