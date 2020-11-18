@@ -34,7 +34,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :nickname, unique: true
       t.string :otp_backup_codes
-      t.string :avatar_url
+      t.string :avatar_url, default: "https://gravatar.com/avatar/009fbe9b892626ef573fd279f7b31213?s=400&d=mp&r=x"
       t.string :friend_list, default: [], array: true
       t.integer :status, default: 0
 

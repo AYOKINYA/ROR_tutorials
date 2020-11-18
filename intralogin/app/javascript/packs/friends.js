@@ -130,9 +130,9 @@ $(function() {
       },
 
       view_profile: function(e) {
-        var id = this.$('#user-id').val();
-        console.log(id);
-        var profilemodel = new SearchModel({id: id});
+        var friend_id = e.currentTarget.getAttribute("friend-id");
+        console.log(friend_id);
+        var profilemodel = new SearchModel({id: friend_id});
         profilemodel.fetch({
           success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
             console.log(profilemodel.toJSON());
@@ -149,7 +149,6 @@ $(function() {
         'click #close-profile' : 'close_profile'
       },
       close_profile: function(e) {
-        console.log("hello")
         this.$el.empty();
       }
     });
