@@ -29,7 +29,8 @@ $(function() {
     tagName: "li",
     events: {
       "dblclick .view" : "edit",
-      "blur .edit" : "close"
+      "blur .edit" : "close",
+      "submit #avatar-form": "upload_image"
     },
 
     initialize: function() {
@@ -54,7 +55,6 @@ $(function() {
     },
 
     close: function() {
-      
       var new_nickname = this.$('.edit').val();
       if (!new_nickname) {
         return ;
@@ -62,6 +62,26 @@ $(function() {
         this.model.save({nickname: new_nickname});
         this.$('.view').html('<label>' + new_nickname + '</label>')
       }
+    },
+
+    upload_image: function(e) {
+      e.preventDefault();
+			const file = document.getElementById("avatar");
+			if (!file.files[0])
+        return ;
+      const reader = new FileReader();
+      const self = this;
+			reader.addEventListener("load", function () {
+				self.model.set({
+					image: this.result
+				});
+				self.model.save({}, {
+					success: function(model) {
+						self.model.fetch();
+					},
+				});
+			}, false);
+			reader.readAsDataURL(file.files[0]);
     },
   
   });

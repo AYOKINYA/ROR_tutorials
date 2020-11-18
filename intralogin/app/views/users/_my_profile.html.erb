@@ -22,6 +22,17 @@
 
 
 <script type="text/template" id="profile-tmpl">
+<div class="container p-3">
+
+<form id="avatar-form" enctype="multipart/form-data">
+  <div class="form-group row">
+    <label>Avatar</label>
+    <input type="file" class="form-control-file avatar" id="avatar" accept="image/*">
+  </div>
+  <button type="submit" class="btn btn-primary btn-sm">Change Avatar</button>
+</form>
+</div>
+
   <img src="{{=avatar_url}}" width ="190"/>
     <div class="card no-outline">
       <div class="card-body">

@@ -24,13 +24,22 @@ class UsersController < ApplicationController
       return
     end
 
-    if params[:nickname].length > 20
-      render plain: "The length of the nickname must be shorter than 20", status: :forbidden
-      return
+    if !params[:nickname].nil?
+      if params[:nickname].length > 20
+        render plain: "The length of the nickname must be shorter than 20", status: :forbidden
+        return
+      end
+      @user = User.find(params[:id])
+      @user.nickname = params[:nickname]
+      @user.save!
     end
-    @user = User.find(params[:id])
-    @user.nickname = params[:nickname]
-    @user.save!
+
+    if !params[:image].nil?
+        res = Cloudinary::Uploader.upload(params[:image])
+        @user = User.find(params[:id])
+        @user.avatar_url = res["url"]  
+        @user.save!
+    end
   end
 
   def search
