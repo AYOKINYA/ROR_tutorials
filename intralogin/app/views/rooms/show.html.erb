@@ -1,4 +1,4 @@
 <p id="notice"><%= notice %></p>
-
+<div id="room-id" data-room-id="<%= @room.try(:id) %>"></div>
 <%= link_to 'Edit', edit_room_path(@room) %> |
 <%= link_to 'Back', rooms_path %>
