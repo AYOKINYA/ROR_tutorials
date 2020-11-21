@@ -65,7 +65,7 @@ $(function() {
         console.log(content);
         if (content === "")
             return ;
-        const new_msg = new ChatModel({id: id, content: content});
+        const new_msg = new ChatModel({user_id: id, content: content});
         var self = this;
         new_msg.fetch({
           success: () => {
