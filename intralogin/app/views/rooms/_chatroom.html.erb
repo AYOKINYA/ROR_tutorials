@@ -1,0 +1,23 @@
+
+<script type="text/template" id="chat-room-tmpl">
+<button type="button" id="close-chat-room" class="close" aria-label="Close">
+      <span aria-hidden="true" class="float-right">&times;</span>
+</button>
+<br>
+<br>
+{{_.each(chats, function(chat, i) { }}
+		<li class="list-group-item"> {{= chat.content}} 
+		</li>
+{{ }) }}<br>
+
+<form id="send-message-form">
+    <input type="hidden" id="user-id" value="{{=chats[0].user_id}}">
+    <input type="text" id="content" class="form-control">
+    <button type="submit" class="btn btn-primary btn-sm float-right send-message">Send</button>
+</form>
+
+</script>
+
+<div id="chat-app">
+    <div id="chat-messages-view">
+</div>

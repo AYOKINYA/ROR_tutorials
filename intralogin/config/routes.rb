@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   get 'user_status/show'
   get 'user_status/update'
-  resources :messages
-  resources :rooms
+  resources :rooms do
+    resources :messages
+  end
   resources :friends
   get '/search' => 'users#search', :as => 'search_user'
   get 'users/index'
