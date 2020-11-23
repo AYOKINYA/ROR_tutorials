@@ -2,6 +2,8 @@ import $ from 'jquery';
 import _ from "underscore"
 import Backbone from 'backbone';
 
+import Router from './Router'
+
 _.templateSettings = {
     interpolate : /\{\{=(.+?)\}\}/g,
     escape : /\{\{-(.+?)\}\}/g,
@@ -139,11 +141,19 @@ $(function() {
     var FriendProfileView = Backbone.View.extend({
       el: '#friend-profile-view',
       events: {
-        'click #close-profile' : 'close_profile'
+        'click #close-profile' : 'close_profile',
+        'click .send-dm' : 'send_dm'
       },
+
       close_profile: function(e) {
         this.$el.empty();
-      }
+      },
+
+      send_dm: function(e) {
+        console.log("Hi")
+        this.$el.empty();
+        Router.router.navigate("/rooms/" + 1, { trigger: true });
+      },
     });
 
     var FriendsView = new FriendsListView();

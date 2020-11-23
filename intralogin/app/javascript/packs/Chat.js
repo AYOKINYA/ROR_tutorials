@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import _ from "underscore"
 import Backbone from 'backbone';
+import RoomChannel from "../channels/room_channel"
 
 _.templateSettings = {
     interpolate : /\{\{=(.+?)\}\}/g,
@@ -19,18 +20,21 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
   }
 });
 
+const Chat = {};
+
 $(function() {
 
-    var ChatModel = Backbone.Model.extend({
-    urlRoot: '/rooms/1/messages/',
+    var MessageModel = Backbone.Model.extend({
+    urlRoot: '/rooms/1/messages',
     });
 
-    var ChatCollection = Backbone.Collection.extend({
-    model: ChatModel,
+    var MessageCollection = Backbone.Collection.extend({
+    model: MessageModel,
     url: "/rooms/1/messages.json"
     });
-      
-    var ChatRoomView = Backbone.View.extend({
+
+    Chat.messages = MessageCollection;
+    Chat.RoomView = Backbone.View.extend({
       el: '#chat-app',
 
       template: _.template($('#chat-room-tmpl').html()),
@@ -41,10 +45,11 @@ $(function() {
       },
 
       initialize: function() {
-        this.collection = new ChatCollection;
+        this.collection = new Chat.messages;
         this.listenTo(this.collection, 'sync', this.render);
         this.listenTo(this.collection, 'destroy', this.render);
         this.collection.fetch();
+        RoomChannel.start();
       },
     
       render: function() {
@@ -65,14 +70,14 @@ $(function() {
         console.log(content);
         if (content === "")
             return ;
-        const new_msg = new ChatModel({user_id: id, content: content});
+        const new_msg = new MessageModel({user_id: id, content: content});
         var self = this;
         new_msg.fetch({
           success: () => {
             self.collection.add(new_msg);
             new_msg.save({}, {
                 success: function() {
-                    $('#chat-messages-view').html(self.template(self.collection.toJSON()));
+                    $('#chat-messages-view').html(self.template({chats: self.collection.toJSON()}));
                 },
             });
           }
@@ -80,7 +85,6 @@ $(function() {
       },
     
     });
-
-    var chatroom = new ChatRoomView();
-    
 });
+
+export default Chat;

@@ -29,6 +29,9 @@ class MessagesController < ApplicationController
   # POST rooms/:room_id/messages
   # POST rooms/:room_id/messages.json
   def create
+    # if params[:user_id].to_i == current_user[:id]
+    #   return
+    # end
     @message = Message.new(message_params)
     @message.user = current_user
     @message.room_id = params[:room_id]
