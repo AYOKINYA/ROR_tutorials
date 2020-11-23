@@ -35,15 +35,11 @@ class MessagesController < ApplicationController
     @messages = Message.all
     ActionCable.server.broadcast "room_channel_#{@message.room_id}", message: @message
 
-    respond_to do |format|
       if @message.save
-        format.html { render :index, notice: 'Message was successfully created.' }
-        format.json { render :show, status: :created, location: @message }
+        render json: @message
       else
-        format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        render plain: "Failed to create a message", status: :unprocessable_entity
       end
-    end
   end
 
 
@@ -55,6 +51,6 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.require(:message).permit(:content)
+      params.require(:message).permit(:content, :user_id)
     end
 end
