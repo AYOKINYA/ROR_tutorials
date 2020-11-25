@@ -34,7 +34,7 @@ $(function() {
     url: "/rooms/1/messages.json"
     });
 
-    Chat.messages = MessageCollection;
+    Chat.messages = new MessageCollection;
     Chat.RoomView = Backbone.View.extend({
       el: '#chat-app',
 
@@ -46,14 +46,15 @@ $(function() {
       },
 
       initialize: function() {
-        this.collection = new Chat.messages;
+        this.collection = Chat.messages;
         this.listenTo(this.collection, 'sync', this.render);
         this.listenTo(this.collection, 'destroy', this.render);
         this.collection.fetch();
-        RoomChannel.start();
+        RoomChannel.start(this.render_data);
       },
     
       render: function() {
+        console.log("Rendering messages")
         $('#chat-messages-view').html(this.template({chats: this.collection.toJSON()}));
       },
 
@@ -86,7 +87,17 @@ $(function() {
           }
         })  
       },
-    
+
+      render_data : function(data) {
+        const cur_id = $('input#user-id').val();
+        if (data.message.user_id == cur_id)
+          return ;
+        const new_msg = new MessageModel(data.message);
+        Chat.messages.add(new_msg);
+        setTimeout(function() {
+          Chat.RoomView.render();
+        }, 1000);
+      }
     });
 });
 

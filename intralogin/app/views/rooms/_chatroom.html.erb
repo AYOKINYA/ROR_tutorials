@@ -6,12 +6,21 @@
 <br>
 <br>
 {{_.each(chats, function(chat, i) { }}
-		<li class="list-group-item"> {{= chat.content}} 
+		<li class="list-group-item">
+        {{ if (<%= current_user.id %> == chat.user_id) { }}
+        <div class="text-right">
+         {{= chat.content}}
+        </div>
+        {{ } else { }}
+        <div class="text-left">
+         {{= chat.content}}
+        </div>
+        {{ } }}
 		</li>
 {{ }) }}<br>
 
 <form id="send-message-form">
-    <input type="hidden" id="user-id" value="{{=chats[0].user_id}}">
+    <input type="hidden" id="user-id" value="<%= current_user.id %>">
     <input type="text" id="content" class="form-control">
     <button type="submit" class="btn btn-primary btn-sm float-right send-message">Send</button>
 </form>

@@ -13,7 +13,7 @@ document.addEventListener('turbolinks:load', () => {
       this.channel = null;
     }
   };
-  RoomChannel.start = function() {
+  RoomChannel.start = function(render_data) {
 
     if (this.channel)
       return ;
@@ -33,6 +33,8 @@ document.addEventListener('turbolinks:load', () => {
 
       received(data) {
         console.log("DATA received");
+        
+        render_data(data);
         // Called when there's incoming data on the websocket for this channel
       }
     });
