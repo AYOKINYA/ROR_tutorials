@@ -150,7 +150,6 @@ $(function() {
       },
 
       send_dm: function(e) {
-        console.log("Hi")
         this.$el.empty();
         Router.router.navigate("/rooms/" + 1, { trigger: true });
       },

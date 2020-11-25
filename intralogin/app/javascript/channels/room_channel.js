@@ -1,20 +1,28 @@
 import consumer from "./consumer"
 
 const RoomChannel = {};
+RoomChannel.channel = null;
 
 document.addEventListener('turbolinks:load', () => {
 
-  const room_element = document.getElementById('room-id');
-  const room_id = room_element.getAttribute('data-room-id');
-
+  // const room_element = document.getElementById('room-id');
+  // const room_id = room_element.getAttribute('data-room-id');
+  RoomChannel.leave = function() {
+    if (this.channel) {
+      this.channel.unsubscribe();
+      this.channel = null;
+    }
+  };
   RoomChannel.start = function() {
-    console.log("RoomChannel");
+
     if (this.channel)
       return ;
-      consumer.subscriptions.create({channel: "RoomChannel", room_id: room_id}, {
+      this.channel = consumer.subscriptions.create({
+        channel: "RoomChannel", room_id: 1
+      }, {
       connected() {
         // Called when the subscription is ready for use on the server
-        console.log("You entered a chat room" + room_id + "!")
+        console.log("You entered a chat room " + 1 + "!")
       },
 
       disconnected() {

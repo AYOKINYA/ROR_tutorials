@@ -2,6 +2,7 @@ import $ from 'jquery';
 import _ from "underscore"
 import Backbone from 'backbone';
 import RoomChannel from "../channels/room_channel"
+import Router from './Router'
 
 _.templateSettings = {
     interpolate : /\{\{=(.+?)\}\}/g,
@@ -57,8 +58,10 @@ $(function() {
       },
 
       close_chatroom: function(e) {
-        this.$el.empty();
-        console.log("you have left the chat room")
+        $('#chat-messages-view').empty();
+        console.log("The chatroom is closed")
+        RoomChannel.leave();
+        Router.router.navigate("", { trigger: true });
       },
 
       send_message: function(e) {

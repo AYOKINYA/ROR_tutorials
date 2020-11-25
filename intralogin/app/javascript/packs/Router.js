@@ -9,12 +9,15 @@ $(function() {
 
   const RouterList = Backbone.Router.extend({
     routes: {//List of URL routes with the corresponding function name which will get called when user will visit a page having URL containing this route
-        "rooms/:room_id":  "chatroom",  // localhost:8080/#rooms/3
+      "": "main_page",  
+      "rooms/:room_id":  "chatroom",  // localhost:8080/#rooms/3
     },
-    chatroom(){
-        console.log("hi");
+    chatroom()  {
         Chat.room = new Chat.RoomView();
-        }
+    },
+    main_page() {
+      console.log("You are on the main page")
+    }
     });
 
   Router.router = new RouterList();
