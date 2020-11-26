@@ -12,8 +12,8 @@ $(function() {
       "": "main_page",  
       "rooms/:room_id":  "chatroom",  // localhost:8080/#rooms/3
     },
-    chatroom()  {
-        Chat.room = new Chat.RoomView();
+    chatroom(room_id)  {
+        Chat.room = new Chat.RoomView({room_id: room_id});
     },
     main_page() {
       console.log("You are on the main page")

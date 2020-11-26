@@ -45,7 +45,9 @@ $(function() {
         'submit #send-message-form' : 'send_message',
       },
 
-      initialize: function() {
+      initialize: function(options) {
+        this.options = options;
+        console.log(this.options.room_id) // 잘 출력된다.
         this.collection = Chat.messages;
         this.listenTo(this.collection, 'sync', this.render_messages);
         this.listenTo(this.collection, 'destroy', this.render_messages);
