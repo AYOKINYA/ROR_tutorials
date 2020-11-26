@@ -47,13 +47,13 @@ $(function() {
 
       initialize: function() {
         this.collection = Chat.messages;
-        this.listenTo(this.collection, 'sync', this.render);
-        this.listenTo(this.collection, 'destroy', this.render);
+        this.listenTo(this.collection, 'sync', this.render_messages);
+        this.listenTo(this.collection, 'destroy', this.render_messages);
         this.collection.fetch();
         RoomChannel.start(this.render_data);
       },
     
-      render: function() {
+      render_messages: function() {
         console.log("Rendering messages")
         $('#chat-messages-view').html(this.template({chats: this.collection.toJSON()}));
       },
@@ -88,15 +88,13 @@ $(function() {
         })  
       },
 
-      render_data : function(data) {
+      render_data: function(data) {
         const cur_id = $('input#user-id').val();
         if (data.message.user_id == cur_id)
           return ;
         const new_msg = new MessageModel(data.message);
         Chat.messages.add(new_msg);
-        setTimeout(function() {
-          Chat.RoomView.render();
-        }, 1000);
+        Chat.room.render_messages();
       }
     });
 });
