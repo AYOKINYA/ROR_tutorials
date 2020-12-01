@@ -26,6 +26,12 @@ ActiveRecord::Schema.define(version: 2020_11_14_075022) do
   end
 
   create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.string "password"
+    t.string "owner"
+    t.string "admin_list", default: [], array: true
+    t.string "member_list", default: [], array: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -39,7 +45,7 @@ ActiveRecord::Schema.define(version: 2020_11_14_075022) do
     t.string "name"
     t.string "nickname"
     t.string "otp_backup_codes"
-    t.string "avatar_url"
+    t.string "avatar_url", default: "https://gravatar.com/avatar/009fbe9b892626ef573fd279f7b31213?s=400&d=mp&r=x"
     t.string "friend_list", default: [], array: true
     t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
