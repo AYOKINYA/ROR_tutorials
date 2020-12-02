@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import _ from "underscore"
 import Backbone from 'backbone';
+import Helper from './Helper.js'
 
 _.templateSettings = {
     interpolate : /\{\{=(.+?)\}\}/g,
@@ -26,7 +27,7 @@ $(function() {
     el: '#profile-app',
 
     template: _.template($('#profile-tmpl').html()),
-    edit_template: _.template($('#edit-profile-tmpl').html()),
+
     tagName: "li",
     events: {
       "click #edit-profile" : "edit_profile",
@@ -49,30 +50,58 @@ $(function() {
     edit_profile: function() {
       this.model.fetch({
         success: () => {
-          $('#edit-profile-view').html(this.edit_template(this.model.toJSON()));
+          var editprofileView = new EditProfileView({model: this.model});
         }
       }) 
     },
   
-    
   });
 
   var EditProfileView = Backbone.View.extend({
     el: '#edit-profile-view',
-    
+
+    edit_template: _.template($('#edit-profile-tmpl').html()),
+    two_factor_template: _.template($('#two-factor-tmpl').html()),
+
     events: {
       "dblclick .current-nickname-view" : "change_nickname",
       "blur .edit" : "close",
       "submit #avatar-form": "upload_image",
       'click #close-my-profile' : 'close_profile',
+      'click #enable-two-factor' : 'enable_two_factor',
+      'click #disable-two-factor' : 'disable_two_factor',
     },
 
     initialize: function() {
+      this.model.fetch();
       this.listenTo(this.model, 'sync', this.render);
     },
-  
+
+    render: function() {
+      $('#edit-profile-view').html(this.edit_template(this.model.toJSON()));
+      $('#two-factor').html(this.two_factor_template(this.model.toJSON()));
+    },
+
+    render_two_factor : function(data) {
+      $('#two-factor').html(this.two_factor_template(data));
+    },
+    
+    enable_two_factor: async function() {
+      console.log("enable")
+      const id = this.model.get("id");
+			await Helper.ajax(`/two_factor_settings/`, "otp_required_for_login=true", "PUT");
+			const data = await Helper.ajax(`/two_factor_settings/`, "", "GET");
+			this.render_two_factor(data);
+    },
+    
+		disable_two_factor: async function() {
+      console.log("disable")
+			await Helper.ajax(`/two_factor_settings/`, "otp_required_for_login=false", "PUT");
+			const data = await Helper.ajax(`/two_factor_settings/`, "", "GET");
+			this.render_two_factor(data);
+		},
+
     change_nickname: function() {
-      console.log('Change nickname');
       $('.current-nickname-view').html('<input class="edit" type="text" />')
       $('.edit').focus();
     },
@@ -112,9 +141,8 @@ $(function() {
     },
 
   });
+  
     const id = window.$('#cur-user-id').val();
     var profile = new ProfileModel({id : id});
     var myprofileView = new MyProfileView({model: profile});
-    var editprofileView = new EditProfileView({model: profile});
-
 });

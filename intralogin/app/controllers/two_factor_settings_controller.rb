@@ -1,11 +1,25 @@
 class TwoFactorSettingsController < ApplicationController
-    
+    def show
+
+        user = User.find_by(id: current_user[:id]).as_json(only: [:id, :otp_backup_codes, :otp_required_for_login])
+        
+        if user.blank?
+          render plain: "forbidden", status: :forbidden
+        end
+
+        data = {
+          :id => current_user[:id],
+          :otp_backup_codes => current_user[:otp_backup_codes],
+          :otp_required_for_login => current_user[:otp_required_for_login],
+        }
+        return render json: data
+    end  
+
     def new
       if current_user.otp_required_for_login
         flash[:alert] = 'Two Factor Authentication is already enabled.'
         return redirect_to edit_user_registration_path
       end
-  
       current_user.generate_two_factor_secret_if_missing!
     end
   
@@ -13,7 +27,6 @@ class TwoFactorSettingsController < ApplicationController
   
       if current_user.validate_and_consume_otp!(enable_2fa_params[:code])
         current_user.enable_two_factor!
-  
         flash[:notice] = 'Successfully enabled two factor authentication, please make note of your backup codes.'
         redirect_to edit_two_factor_settings_path
       else
@@ -21,14 +34,13 @@ class TwoFactorSettingsController < ApplicationController
         render :new
       end
     end
-
+    # PUT /two_factor_settings/
     def update
         if current_user[:otp_required_for_login] == true
           disable_two_factor
         else
           enable_two_factor
         end
-        redirect_to edit_user_registration_path
     end
   
     def edit

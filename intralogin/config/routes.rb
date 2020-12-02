@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session_path
   end
   resources :users
-  resource :two_factor_settings, except: [:index, :show]
+  resource :two_factor_settings, except: [:index]
   resource :otp_auth, except: [:index, :show]
   root 'users#index'
 

@@ -3,7 +3,6 @@
 </div>
 
 <script type="text/template" id="edit-profile-tmpl">
-
 <button type="button" id="close-my-profile" class="close" aria-label="Close">
       <span aria-hidden="true" class="float-right">&times;</span>
 </button>
@@ -21,22 +20,25 @@
         <div class="current-nickname-view">
           <label>{{=nickname }}</label>
         </div>
-        <br><b>
-          <%= link_to "Logout", destroy_user_session_path, method: :delete, class:"button is-info" %>
-        </b>
+  <b>Two factor authentication</b>
+  <br>
 
-        <div class="card">
-  <div class="card-header">
-    Two factor authentication
-  </div>
-  <div class="card-body">
-    <% if current_user.otp_required_for_login %>
-      <p>Two factor authentication is enabled.</p>
-      <p><%= link_to('Disable Two Factor Authentication', two_factor_settings_path, class: 'btn btn-danger', method: :put, data: {confirm: 'Are you sure you want to disable two factor authentication?'}) %></p>
-    <% else %>
-      <p>Two factor authentication is NOT enabled.</p>
-      <p><%= link_to('Enable Two Factor Authentication', two_factor_settings_path, class: 'btn btn-primary', method: :put) %></p>
-    <% end %>
-  </div>
+<div id="two-factor">
 </div>
+
+</script>
+
+<script type="text/template" id="two-factor-tmpl">
+<div id="two-factor-switch">
+    {{ if (otp_required_for_login) { }}
+      <p>Two factor authentication is enabled.</p>
+      <button class="btn btn-outline-success" id="disable-two-factor">Disable</button>
+      <p><%= link_to('Disable Two Factor Authentication', two_factor_settings_path, class: 'btn btn-danger', method: :put, data: {confirm: 'Are you sure you want to disable two factor authentication?'}) %></p>
+    {{ } else { }}
+      <p>Two factor authentication is NOT enabled.</p>
+      <button class="btn btn-outline-success" id="enable-two-factor">Enable</button>
+      <p><%= link_to('Enable Two Factor Authentication', two_factor_settings_path, class: 'btn btn-primary', method: :put) %></p>
+      <p><%= link_to('Disable Two Factor Authentication', two_factor_settings_path, class: 'btn btn-danger', method: :put, data: {confirm: 'Are you sure you want to disable two factor authentication?'}) %></p>
+    {{ } }}
+  </div>
 </script>
