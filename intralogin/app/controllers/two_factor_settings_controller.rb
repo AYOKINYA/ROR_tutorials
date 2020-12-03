@@ -114,4 +114,7 @@ class TwoFactorSettingsController < ApplicationController
           standalone: true
       ).html_safe
     end
+
+    
+
   end
