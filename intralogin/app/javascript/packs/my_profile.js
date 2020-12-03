@@ -72,31 +72,34 @@ $(function() {
       'click #disable-two-factor' : 'disable_two_factor',
     },
 
-    initialize: function() {
+    initialize: async function() {
       this.model.fetch();
       this.listenTo(this.model, 'sync', this.render);
+      const data = await Helper.ajax(`/two_factor_settings/`, "", "GET");
+			this.render_two_factor(data);
     },
 
     render: function() {
       $('#edit-profile-view').html(this.edit_template(this.model.toJSON()));
-      $('#two-factor').html(this.two_factor_template(this.model.toJSON()));
+      $('#two-factor').html(this.edit_template(this.model.toJSON()));
+
     },
 
     render_two_factor : function(data) {
       $('#two-factor').html(this.two_factor_template(data));
     },
-    
+
     enable_two_factor: async function() {
       console.log("enable")
-      const id = this.model.get("id");
-			await Helper.ajax(`/two_factor_settings/`, "otp_required_for_login=true", "PUT");
+      await Helper.ajax(`/two_factor_settings/`, "otp_required_for_login=true", "PUT");
 			const data = await Helper.ajax(`/two_factor_settings/`, "", "GET");
+      console.log(data);
 			this.render_two_factor(data);
     },
     
 		disable_two_factor: async function() {
       console.log("disable")
-			await Helper.ajax(`/two_factor_settings/`, "otp_required_for_login=false", "PUT");
+      await Helper.ajax(`/two_factor_settings/`, "otp_required_for_login=false", "PUT");
 			const data = await Helper.ajax(`/two_factor_settings/`, "", "GET");
 			this.render_two_factor(data);
 		},
