@@ -1,9 +1,11 @@
+<div id="app">
 
   <% if current_user.otp_required_for_login? && !user_session["otp_done"] %>
-    <%= render "otp_auth/otp_auth"  %>
+    <%= render "users/otp_auth"  %>
   <% end %>
   
   <% if !current_user.otp_required_for_login? || user_session["otp_done"] %>
     <%= render 'users/my_profile' %>
   <% end %>
-  
+
+</div>

@@ -14,4 +14,8 @@ Helper.ajax = function(url, data, method) {
 	})
 }
 
+Helper.hi = function() {
+	console.log("HI")
+}
+
 export default Helper;
