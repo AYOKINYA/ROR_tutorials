@@ -28,15 +28,24 @@ if ($('html').data().isLogin && $('html').data().passOtp) {
 $(function() {
 
     var MessageModel = Backbone.Model.extend({
-    urlRoot: '/rooms/1/messages',
+      initialize: function (attrs) {
+				this.url = function() {
+					return "/rooms/" + Backbone.history.fragment.split("/")[1] + "/messages/";
+				};
+			},
     });
 
     var MessageCollection = Backbone.Collection.extend({
     model: MessageModel,
-    url: "/rooms/1/messages.json"
+    initialize: function(attrs, options) {
+      this.url = function () {
+        return "/rooms/" + options.room_id + "/messages.json";
+      };
+    },
     });
 
     Chat.messages = new MessageCollection;
+
     Chat.RoomView = Backbone.View.extend({
       el: '#chat-app',
 
@@ -54,7 +63,7 @@ $(function() {
         this.listenTo(this.collection, 'sync', this.render_messages);
         this.listenTo(this.collection, 'destroy', this.render_messages);
         this.collection.fetch();
-        RoomChannel.start(this.render_data);
+        RoomChannel.start(this.render_data); //render_data is a callback function
       },
     
       render_messages: function() {

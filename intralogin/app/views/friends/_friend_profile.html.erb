@@ -19,7 +19,7 @@
     {{ } }}
     </li>
   </ul>
-  <button class="btn btn-success btn-sm send-dm" friend-id="{{id}}">
+  <button class="btn btn-success btn-sm send-dm" data-room="{{= Helper.make_room(id, $('html').data().userId) }}">
 				Send Direct Message
 	</button>
 </div>

@@ -3,6 +3,7 @@ import _ from "underscore"
 import Backbone from 'backbone';
 
 import Router from './Router'
+import Helper from './Helper'
 
 _.templateSettings = {
     interpolate : /\{\{=(.+?)\}\}/g,
@@ -128,7 +129,7 @@ $(function() {
 
       view_profile: function(e) {
         var friend_id = e.currentTarget.getAttribute("friend-id");
-        console.log(friend_id);
+        Helper.print(friend_id);
         var profilemodel = new SearchModel({id: friend_id});
         profilemodel.fetch({
           success: () => { // 화살표 함수로 하지 않으면 this가 undefined가 되어 처리가 매우 힘들다...
@@ -153,7 +154,9 @@ $(function() {
 
       send_dm: function(e) {
         this.$el.empty();
-        Router.router.navigate("/rooms/" + 1, { trigger: true });
+        e.stopImmediatePropagation();
+        const room_id = $(e.currentTarget).data().room;
+				Router.router.navigate("/rooms/" + room_id, { trigger: true });
       },
     });
 
