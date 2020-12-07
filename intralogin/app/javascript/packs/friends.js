@@ -21,7 +21,7 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
   }
 });
 
-if ($('html').data().isLogin) {
+if ($('html').data().isLogin && $('html').data().passOtp) {
 
 $(function() {
 

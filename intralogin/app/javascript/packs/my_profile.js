@@ -9,7 +9,7 @@ _.templateSettings = {
     evaluate: /\{\{(.+?)\}\}/g,
   };
 
-if ($('html').data().isLogin) {
+if ($('html').data().isLogin && $('html').data().passOtp) {
 
 $(function() {
 

@@ -1,5 +1,14 @@
 <!DOCTYPE html>
-<html data-is-login="<%= user_signed_in? %>" <% if user_signed_in? %> data-user-id=<%= current_user[:id] %> <% end %> >
+<html data-is-login="<%= user_signed_in? %>"
+<% if user_signed_in? %>
+  data-user-id=<%= current_user[:id] %>
+  <% if !current_user.otp_required_for_login? || user_session["otp_done"] %>
+    data-pass-otp=<%= true %>
+  <% else %>
+    data-pass-otp=<%= false %>
+  <% end %>
+ <% end %>
+ >
   <head>
     <title>Intralogin</title>
     <%= csrf_meta_tags %>

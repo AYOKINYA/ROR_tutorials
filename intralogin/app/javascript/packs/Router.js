@@ -5,6 +5,9 @@ import Backbone from 'backbone';
 import Chat from './Chat'
 
 const Router = {};
+
+if ($('html').data().isLogin && $('html').data().passOtp) {
+
 $(function() {
 
   const RouterList = Backbone.Router.extend({
@@ -24,5 +27,7 @@ $(function() {
   Backbone.history.start();
 
 });
+
+}
 
 export default Router;
