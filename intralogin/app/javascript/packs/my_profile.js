@@ -83,8 +83,6 @@ $(function() {
 
     render: function() {
       $('#edit-profile-view').html(this.edit_template(this.model.toJSON()));
-      $('#two-factor').html(this.edit_template(this.model.toJSON()));
-
     },
 
     render_two_factor : function(data) {
