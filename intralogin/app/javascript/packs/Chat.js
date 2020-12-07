@@ -23,6 +23,8 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
 
 const Chat = {};
 
+if ($('html').data().isLogin) {
+
 $(function() {
 
     var MessageModel = Backbone.Model.extend({
@@ -100,5 +102,7 @@ $(function() {
       }
     });
 });
+
+}
 
 export default Chat;

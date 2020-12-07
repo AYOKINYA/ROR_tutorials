@@ -9,6 +9,8 @@ _.templateSettings = {
     evaluate: /\{\{(.+?)\}\}/g,
   };
 
+if ($('html').data().isLogin) {
+
 $(function() {
 
   var ProfileModel = Backbone.Model.extend({
@@ -149,3 +151,5 @@ $(function() {
     var profile = new ProfileModel({id : id});
     var myprofileView = new MyProfileView({model: profile});
 });
+
+}

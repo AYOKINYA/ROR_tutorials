@@ -21,6 +21,8 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
   }
 });
 
+if ($('html').data().isLogin) {
+
 $(function() {
 
   var SearchModel = Backbone.Model.extend({
@@ -160,3 +162,5 @@ $(function() {
     var Friendprofile = new FriendProfileView();
     
 });
+
+}

@@ -8,6 +8,8 @@ _.templateSettings = {
     evaluate: /\{\{(.+?)\}\}/g,
   };
 
+if ($('html').data().isLogin) {
+
 $(function() {
 
   var UserModel = Backbone.Model.extend({
@@ -81,3 +83,5 @@ $(function() {
     UsersList.fetch();
 
 });
+
+}
